@@ -7,26 +7,26 @@ const APP_STORAGE_KEY = APP_NAME.toLowerCase()
 const APP_STORAGE_FILE_PATH = `${app.getPath('userData')}/storage/${APP_STORAGE_KEY}.json`
 
 var deviceManager = new DeviceManager(APP_STORAGE_KEY);
-console.log("DevicesManager", deviceManager)
-deviceManager.loadDevices().then(() => {
-		console.log("Devices loaded")
-}).catch((error) => {
-	console.log("Error loading devices!", error)
-})
+var tray = null;
 
 function createTray() {
-	const tray = new Tray(appIcon)
+	tray = new Tray("./images/vr.png")
 	tray.setToolTip(APP_NAME)
 
 	tray.on('click', _ => {
-		tray.popUpContextMenu(createMenu(deviceManager.devices))
+		var menu = createMenu(deviceManager.devices)
+		tray.popUpContextMenu(menu)
+		tray.setContextMenu(menu)
 	})
 
+	tray.setContextMenu(createMenu(deviceManager.devices))
 	return tray
 }
 
 function createMenu(devices) {
 	const template = []
+
+	devices = devices.filter(device => { return device.alias })
 
 	if (!devices.length) {
 		template.push({ label: 'No devices found', enabled: false })
@@ -37,9 +37,7 @@ function createMenu(devices) {
 		template.push({
 			label: device.relayState ? 'On' : 'Off',
 			click() {
-				device.setRelayState(device.relayState ? 0 : 1, () => {
-					console.log("Updated relay state to ", device.relayState)
-				})
+				device.setRelayState(device.relayState ? 0 : 1)
 			}
 		})
 		template.push({ type: 'separator' })
@@ -65,7 +63,16 @@ function openConfigFile() {
 	})
 }
 
-app.on('ready', createTray)
-if (app.dock) {
-	app.dock.hide()
-}
+app.on('ready', () => {
+
+	deviceManager.loadDevices().then(() => {
+		console.log("Devices loaded")
+		createTray()
+	}).catch((error) => {
+		console.log("Error loading devices!", error)
+	})
+
+	if (app.dock) {
+		app.dock.hide()
+	}
+})

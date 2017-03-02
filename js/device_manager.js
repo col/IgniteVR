@@ -11,7 +11,7 @@ function DeviceManager(appStorageKey) {
 
 DeviceManager.prototype.loadDevices = function() {
   var promise = new Promise((resolve, reject) => {
-    console.log("loading devices...")
+    console.log("Loading devices...")
     storage.get(this.appStorageKey, (error, data) => {
       if (error) {
         reject('Error loading device list', error)
