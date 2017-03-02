@@ -1,0 +1,30 @@
+{
+  "name": "IgniteVR",
+  "version": "1.0.0",
+  "description": "Turn the Vive base stations in the TWSG office on and off",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "package-mac": "electron-packager . --platform=darwin --out=out",
+    "package-win": "electron-packager . --platform=win32 --out=out"
+  },
+  "repository": "https://github.com/col/IgniteVR",
+  "keywords": [
+    "TP-Link",
+    "HTC",
+    "Vive",
+    "IoT"
+  ],
+  "author": "Colin Harris",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^1.4.1"
+  },
+  "dependencies": {
+    "electron-json-storage": "^3.0.0",
+    "electron-packager": "^8.5.1",
+    "jssha": "^2.2.0",
+    "promise": "^7.1.1",
+    "tp_link_smart_plug": "col/tp_link_smart_plug"
+  }
+}
