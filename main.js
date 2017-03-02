@@ -10,7 +10,7 @@ var deviceManager = new DeviceManager(APP_STORAGE_KEY);
 var tray = null;
 
 function createTray() {
-	tray = new Tray("./images/vr.png")
+	tray = new Tray(__dirname + "/images/vr.png")
 	tray.setToolTip(APP_NAME)
 
 	tray.on('click', _ => {
