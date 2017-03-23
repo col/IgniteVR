@@ -6,6 +6,8 @@ const APP_NAME = require('./package').name
 const APP_STORAGE_KEY = APP_NAME.toLowerCase()
 const APP_STORAGE_FILE_PATH = `${app.getPath('userData')}/storage/${APP_STORAGE_KEY}.json`
 
+console.log("APP_STORAGE_FILE_PATH", APP_STORAGE_FILE_PATH)
+
 var deviceManager = new DeviceManager(APP_STORAGE_KEY);
 var tray = null;
 
